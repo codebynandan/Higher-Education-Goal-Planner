@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Higher Education Goal Planner</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,Arial,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh}
+
+/* HEADER */
+.hdr{background:linear-gradient(135deg,#1e3a5f 0%,#0f2942 100%);padding:22px 36px;border-bottom:1px solid rgba(30,64,175,.35);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.hdr-left h1{font-size:1.55rem;font-weight:800;color:#60a5fa;letter-spacing:-.5px}
+.hdr-left p{font-size:.83rem;color:#94a3b8;margin-top:3px}
+.hdr-right{display:flex;gap:8px;align-items:center}
+.badge{background:#1d4ed8;color:#bfdbfe;font-size:.7rem;padding:4px 12px;border-radius:20px;font-weight:700;letter-spacing:.5px}
+.badge2{background:#065f46;color:#6ee7b7;font-size:.7rem;padding:4px 12px;border-radius:20px;font-weight:700;letter-spacing:.5px}
+
+/* LAYOUT */
+.wrap{max-width:1240px;margin:0 auto;padding:28px 20px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+
+/* SECTION HEADING */
+.sh{font-size:.92rem;font-weight:700;color:#93c5fd;margin:26px 0 12px;display:flex;align-items:center;gap:10px}
+.sh::after{content:'';flex:1;height:1px;background:rgba(30,64,175,.3)}
+.sh .sub{font-size:.72rem;font-weight:400;color:#475569;margin-left:4px}
+
+/* CARDS */
+.card{background:#1e293b;border-radius:14px;border:1px solid #334155;padding:20px 22px}
+.ct{font-size:.72rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:14px}
+
+/* KPI TILES */
+.kpi{background:#1e293b;border-radius:12px;border:1px solid #334155;padding:16px 18px;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;border-radius:2px 0 0 2px}
+.kpi.b::before{background:#3b82f6}
+.kpi.g::before{background:#10b981}
+.kpi.y::before{background:#f59e0b}
+.kpi.p::before{background:#8b5cf6}
+.kpi.r::before{background:#ef4444}
+.kl{font-size:.7rem;color:#64748b;text-transform:uppercase;letter-spacing:.9px;font-weight:700}
+.kv{font-size:1.45rem;font-weight:800;margin-top:5px;line-height:1.1}
+.ks{font-size:.72rem;color:#94a3b8;margin-top:5px}
+.col-b{color:#60a5fa}.col-g{color:#34d399}.col-y{color:#fbbf24}.col-p{color:#c084fc}.col-r{color:#f87171}
+
+/* INPUTS */
+.ig{margin-bottom:12px}
+.ig label{display:block;font-size:.78rem;color:#94a3b8;margin-bottom:4px;font-weight:600}
+.ig input,.ig select{width:100%;padding:9px 11px;background:#0f172a;border:1px solid #334155;border-radius:8px;color:#e2e8f0;font-size:.9rem;outline:none;transition:border .18s}
+.ig input:focus,.ig select:focus{border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+.ig .hint{font-size:.69rem;color:#475569;margin-top:3px}
+.yi input{border-color:#b45309!important;background:#140f00!important}
+.yi label{color:#fbbf24!important}
+.yi label span{font-size:.62rem;vertical-align:middle;margin-left:3px;opacity:.7}
+
+/* TOGGLE */
+.tw{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.tl{font-size:.78rem;color:#94a3b8;font-weight:600}
+.tog{position:relative;width:40px;height:21px;cursor:pointer;flex-shrink:0}
+.tog input{opacity:0;width:0;height:0}
+.sli{position:absolute;inset:0;background:#334155;border-radius:21px;transition:.25s}
+.sli::before{content:'';position:absolute;width:15px;height:15px;left:3px;bottom:3px;background:#64748b;border-radius:50%;transition:.25s}
+input:checked+.sli{background:#2563eb}
+input:checked+.sli::before{transform:translateX(19px);background:#fff}
+
+/* PROGRESS */
+.pb-wrap{margin:8px 0}
+.pb-lbl{display:flex;justify-content:space-between;font-size:.72rem;color:#94a3b8;margin-bottom:4px}
+.pb-lbl .pv{font-weight:700}
+.pb-track{height:9px;background:#0f172a;border-radius:9px;overflow:hidden;border:1px solid rgba(30,64,175,.25)}
+.pb-fill{height:100%;border-radius:9px;transition:width .7s cubic-bezier(.4,0,.2,1)}
+.pb-fill.blue{background:linear-gradient(90deg,#1d4ed8,#60a5fa)}
+.pb-fill.green{background:linear-gradient(90deg,#059669,#34d399)}
+
+/* TRACKER INVESTMENT ENTRIES */
+.inv-entry{background:#0f172a;border-radius:10px;border:1px solid #1e293b;padding:12px 14px;margin-bottom:8px;transition:border .2s}
+.inv-entry:hover{border-color:#334155}
+.inv-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
+.inv-row .ig{flex:1;min-width:130px;margin-bottom:0}
+.btn-del{background:#450a0a;border:1px solid #7f1d1d;color:#fca5a5;border-radius:7px;padding:8px 11px;cursor:pointer;font-size:.78rem;font-weight:600;transition:all .18s;white-space:nowrap}
+.btn-del:hover{background:#7f1d1d;border-color:#991b1b}
+
+/* TOTAL MV bar */
+.mv-total{background:#0c1a0c;border:1px solid #14532d44;border-radius:10px;padding:12px 16px;margin-top:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.mv-total .lbl{font-size:.75rem;color:#6ee7b7;font-weight:600;text-transform:uppercase;letter-spacing:.8px}
+.mv-total .val{font-size:1.15rem;font-weight:800;color:#34d399}
+
+/* BUTTONS */
+.btn{padding:10px 22px;border-radius:9px;font-weight:700;font-size:.86rem;border:none;cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;gap:6px}
+.bp{background:#1d4ed8;color:#fff}
+.bp:hover{background:#2563eb;transform:translateY(-1px);box-shadow:0 4px 14px rgba(29,78,216,.35)}
+.bs{background:#0f172a;color:#60a5fa;border:1px solid #1e40af}
+.bs:hover{background:#1e293b}
+.btn-row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+
+/* RRR BANNER */
+.rrr-card{background:linear-gradient(135deg,#160d2e 0%,#0a1628 100%);border:1px solid rgba(139,92,246,.3);border-radius:14px;padding:22px 26px}
+.rrr-label{font-size:.72rem;color:#a78bfa;text-transform:uppercase;letter-spacing:1.2px;font-weight:700}
+.rrr-value{font-size:2.4rem;font-weight:900;color:#c084fc;line-height:1;margin:6px 0 4px}
+.rrr-sub{font-size:.78rem;color:#7c3aed;margin-top:4px}
+.rrr-vs{margin-top:14px;padding-top:14px;border-top:1px solid rgba(139,92,246,.2)}
+
+/* FEASIBILITY */
+.feas-card{background:#1e293b;border-radius:14px;border:1px solid #334155;padding:20px 22px}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:.75rem;font-weight:700}
+.tg{background:#064e3b;color:#6ee7b7;border:1px solid #065f3b}
+.tb{background:#1e3a5f;color:#93c5fd;border:1px solid #1e40af}
+.ty{background:#78350f;color:#fde68a;border:1px solid #92400e}
+.tr{background:#450a0a;color:#fca5a5;border:1px solid #7f1d1d}
+.feas-body{font-size:.82rem;color:#94a3b8;margin-top:10px;line-height:1.6}
+.feas-action{background:#0f172a;border-radius:8px;padding:10px 14px;margin-top:12px;font-size:.78rem;border-left:3px solid #3b82f6;color:#93c5fd;line-height:1.6}
+
+/* TABLE */
+.tw2{overflow-x:auto;margin-top:4px}
+table{width:100%;border-collapse:collapse;font-size:.8rem}
+th{background:#0c1524;color:#60a5fa;padding:9px 12px;text-align:right;font-weight:700;white-space:nowrap;border-bottom:2px solid rgba(30,64,175,.5);position:sticky;top:0}
+th:first-child,th:nth-child(2){text-align:left}
+td{padding:7px 12px;text-align:right;border-bottom:1px solid #1e293b;color:#cbd5e1;white-space:nowrap}
+td:first-child,td:nth-child(2){text-align:left}
+td:first-child{color:#475569;font-size:.75rem}
+tr:hover td{background:rgba(15,33,51,.6)}
+.row-start td{background:rgba(14,30,14,.6)!important;color:#34d399!important;font-weight:700}
+.row-goal td{background:rgba(20,14,40,.8)!important;color:#c084fc!important;font-weight:700}
+.row-short td{background:rgba(40,14,14,.8)!important;color:#f87171!important;font-weight:700}
+.row-mid td{background:rgba(15,25,45,.4)}
+
+/* DIVIDER */
+.divider{height:1px;background:#1e293b;margin:16px 0}
+
+/* INFO NOTE */
+.note{background:rgba(30,58,95,.15);border:1px solid rgba(30,64,175,.3);border-radius:8px;padding:10px 14px;font-size:.76rem;color:#94a3b8;margin-top:10px;line-height:1.5}
+
+@media(max-width:880px){.g2,.g3,.g4{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.g2,.g3,.g4{grid-template-columns:1fr}.hdr{padding:18px 20px}}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-left">
+    <h1>&#127891; Higher Education Goal Planner</h1>
+    <p>Corpus planner &nbsp;&middot;&nbsp; Required return calculator &nbsp;&middot;&nbsp; Year-by-year projection</p>
+  </div>
+  <div class="hdr-right">
+    <span class="badge">Goal Planner</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="sh">&#128221; Goal Inputs <span class="sub">&#11088; Required inputs</span></div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="ct">Core Assumptions</div>
+      <div class="g2" style="gap:10px">
+        <div class="ig" style="grid-column:1/-1">
+          <label style="color:#94a3b8">Child's Name</label>
+          <input type="text" id="childName" value="" placeholder="e.g. Aarav" style="background:#0f172a;border:1px solid #334155;border-radius:8px;color:#e2e8f0;padding:9px 11px;width:100%;font-size:.9rem;outline:none"/>
+          <div class="hint">Optional — used for labelling the plan</div>
+        </div>
+        <div class="yi ig">
+          <label>Birth Year <span>&#11088;</span></label>
+          <input type="number" id="birthYear" value="" min="1995" max="2024"/>
+          <div class="hint">Child's year of birth</div>
+        </div>
+        <div class="ig">
+          <label style="color:#94a3b8">College Start Year <span style="font-size:.68rem;color:#475569;font-weight:400">(auto: birth year + 18)</span></label>
+          <input type="text" id="collegeYear" value="2034" readonly style="background:#0c1828!important;border-color:#1e40af!important;color:#60a5fa!important;font-weight:700;cursor:default"/>
+          <div class="hint">Higher education starts at age 18 &#8212; computed automatically</div>
+        </div>
+        <div class="yi ig">
+          <label>Current Education Cost (&#8377;) <span>&#11088;</span></label>
+          <input type="number" id="currentCost" value="" step="10000"/>
+          <div class="hint">Total cost in today's value</div>
+        </div>
+        <div class="ig">
+          <label>Current Year</label>
+          <input type="number" id="currYear" value="2026" min="2020" max="2040"/>
+        </div>
+        <div class="yi ig">
+          <label>Inflation Rate (%) <span>&#11088;</span></label>
+          <input type="number" id="inflation" value="7" step="0.1" min="6" max="15" oninput="validateInflation(this)"/>
+          <div class="hint" id="inflationHint" style="color:#475569">Education cost inflation p.a. Min: 6% | Max: 15%.</div>
+        </div>
+        <div class="yi ig">
+          <label>Expected Return (%) <span>&#11088;</span></label>
+          <input type="number" id="ror" value="12" step="0.1" min="1" max="18" oninput="validateROR(this)"/>
+          <div class="hint" id="rorHint">Annual portfolio return assumed. Max allowed: 18%.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ct">SIP &amp; Opening Corpus</div>
+      <div class="yi ig">
+        <label>Opening Corpus / Existing Investment (&#8377;) <span>&#11088;</span></label>
+        <input type="number" id="openBal" value="" step="1000"/>
+        <div class="hint">Already invested towards this goal today</div>
+      </div>
+      <div class="yi ig">
+        <label>Monthly SIP Amount (&#8377;) <span>&#11088;</span></label>
+        <input type="number" id="sipAmount" value="" step="500"/>
+        <div class="hint">Set 0 if not doing monthly SIP</div>
+      </div>
+      <div class="tw">
+        <span class="tl">Annual SIP step-up?</span>
+        <label class="tog"><input type="checkbox" id="sipGrowth"/><span class="sli"></span></label>
+        <span id="sipGrowthLbl" style="font-size:.78rem;color:#64748b">No</span>
+      </div>
+      <div class="ig" id="sipGrowthWrap" style="display:none">
+        <label>Annual Step-up Rate (%)</label>
+        <input type="number" id="sipGrowthRate" value="10" step="1" min="1" max="50"/>
+      </div>
+      <div class="divider"></div>
+      <div class="note" style="margin-top:0">The <strong style="color:#c084fc">Required Rate of Return (RRR)</strong> is calculated from your <em>Opening Corpus</em> to the required education corpus at goal year.</div>
+    </div>
+  </div>
+
+  <div class="btn-row" style="margin-top:18px">
+    <button class="btn bp" onclick="calc()">&#128260; Calculate / Refresh</button>
+    <button class="btn bs" onclick="resetAll()">&#8635; Reset to Defaults</button>
+  </div>
+
+  <div class="sh">&#128202; Goal Summary</div>
+  <div class="g3">
+    <div class="kpi b">
+      <div class="kl">Education Corpus Needed</div>
+      <div class="kv col-b" id="kpiCorpus">&#8212;</div>
+      <div class="ks" id="kpiGoalYr">Goal Year: &#8212;</div>
+    </div>
+    <div class="kpi y">
+      <div class="kl">Projected Corpus</div>
+      <div class="kv col-y" id="kpiProj">&#8212;</div>
+      <div class="ks" id="kpiGap">Gap: &#8212;</div>
+    </div>
+    <div class="kpi p">
+      <div class="kl">Years Remaining</div>
+      <div class="kv col-p" id="kpiYrs">&#8212;</div>
+      <div class="ks" id="kpiChildAge">Child age: &#8212;</div>
+    </div>
+  </div>
+
+  <div class="sh">&#127919; Required Rate of Return &amp; Feasibility</div>
+  <div class="g2">
+    <div class="rrr-card">
+      <div class="rrr-label">Required Rate of Return (RRR)</div>
+      <div class="rrr-value" id="rrrVal">&#8212;</div>
+      <div class="rrr-sub">Annual return your <em>current portfolio</em> must earn to reach the corpus by the goal year, accounting for any SIP additions.</div>
+      <div class="rrr-vs" id="rrrVs"></div>
+    </div>
+    <div class="feas-card">
+      <div class="ct">Goal Feasibility</div>
+      <div id="feasTag">&#8212;</div>
+      <div class="feas-body" id="feasBody">&#8212;</div>
+      <div class="feas-action" id="feasAction" style="display:none"></div>
+    </div>
+  </div>
+
+  <div class="sh">&#128200; Progress Towards Goal</div>
+  <div class="card">
+    <div>
+      <div class="ct">Projected Corpus Coverage</div>
+      <div class="pb-wrap">
+        <div class="pb-lbl"><span>Projected (at assumed return) vs corpus needed</span><span class="pv col-b" id="pb2pct">0%</span></div>
+        <div class="pb-track"><div class="pb-fill blue" id="pb2fill" style="width:0%"></div></div>
+        <div class="hint" style="margin-top:4px" id="pb2sub">&#8212;</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh">&#128197; Year-by-Year Projection</div>
+  <div class="card" style="padding:14px 16px">
+    <div class="tw2">
+      <table>
+        <thead>
+          <tr>
+            <th>Yr</th><th>Year</th>
+            <th>Op. Balance</th><th>SIP (Annual)</th>
+            <th>Appreciation</th><th>Withdrawal</th>
+            <th>Cl. Balance</th><th>SIP / Month</th>
+          </tr>
+        </thead>
+        <tbody id="projBody"></tbody>
+      </table>
+    </div>
+    <div class="note">
+      <span style="color:#34d399;font-weight:700">&#9632; Green</span> = opening year &nbsp;&nbsp;
+      <span style="color:#c084fc;font-weight:700">&#9632; Purple</span> = goal year — corpus met &nbsp;&nbsp;
+      <span style="color:#f87171;font-weight:700">&#9632; Red</span> = goal year — shortfall &nbsp;&nbsp;
+      Projection uses the <em>Opening Balance</em> input.
+    </div>
+  </div>
+
+  <div style="margin-top:32px;padding:14px 18px;background:rgba(15,23,42,.6);border:1px solid #1e293b;border-radius:10px;border-left:3px solid #475569">
+    <div style="font-size:.72rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">&#9432; Disclaimer</div>
+    <div style="font-size:.75rem;color:#475569;line-height:1.65">
+      This tool is intended <strong style="color:#64748b">for illustration and study purposes only</strong>. All projections are based on user-provided assumptions and mathematical models. They do not constitute financial advice, investment recommendations, or any guarantee of future returns or outcomes. Actual results may vary significantly depending on market conditions, inflation, fund performance, and other factors beyond the scope of this model. Please consult a qualified financial advisor before making any investment decisions.
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── Validation helpers ──────────────────────────────────────────────
+function validateInflation(el) {
+  var v = parseFloat(el.value);
+  var hint = document.getElementById('inflationHint');
+  if (isNaN(v)) return;
+  if (v > 15) { el.value = 15; v = 15; }
+  if (v < 6)  { el.value = 6;  v = 6;  }
+  hint.style.color = '#475569';
+  hint.textContent = 'Education cost inflation p.a. Min: 6% | Max: 15%.';
+}
+
+function validateROR(el) {
+  var v = parseFloat(el.value);
+  var hint = document.getElementById('rorHint');
+  if (isNaN(v)) return;
+  if (v > 18) { el.value = 18; v = 18; }
+  if (v < 1)  { el.value = 1;  v = 1;  }
+  if (v >= 17) {
+    hint.style.color = '#f87171';
+    hint.textContent = '⚠️ Very aggressive return assumption. Max allowed: 18%.';
+  } else if (v >= 14) {
+    hint.style.color = '#f59e0b';
+    hint.textContent = '⚠️ Aggressive return assumption. Max allowed: 18%.';
+  } else {
+    hint.style.color = '#475569';
+    hint.textContent = 'Annual portfolio return assumed. Max allowed: 18%.';
+  }
+}
+
+// ── Auto-compute college year from birth year ───────────────────────
+document.getElementById('birthYear').addEventListener('input', function() {
+  var by = parseInt(this.value) || 2016;
+  var cy = parseInt(document.getElementById('collegeYear').value) || (by + 18);
+  document.getElementById('collegeYear').value = by + 18;
+  calc();
+});
+
+// ── SIP step-up toggle ──────────────────────────────────────────────
+document.getElementById('sipGrowth').addEventListener('change', function() {
+  document.getElementById('sipGrowthLbl').textContent = this.checked ? 'Yes' : 'No';
+  document.getElementById('sipGrowthWrap').style.display = this.checked ? 'block' : 'none';
+});
+
+// ── Financial math ──────────────────────────────────────────────────
+function projCorpus(ob, sip, r, g, n) {
+  if(n <= 0) return ob;
+  var lump = ob * Math.pow(1+r, n), s = 0;
+  if(sip > 0) {
+    s = Math.abs(r-g) < 1e-6
+      ? sip * n * Math.pow(1+r, n-1)
+      : sip * (Math.pow(1+r,n) - Math.pow(1+g,n)) / (r-g);
+  }
+  return lump + s;
+}
+
+function calcRRR(pv, fv, n, sip, g) {
+  // Allow zero opening corpus — SIP alone may still reach the goal
+  if(n <= 0) return null;
+  if(pv <= 0 && sip <= 0) return null; // nothing invested, can't compute
+  var lo = -0.99, hi = 10.0, mid;
+  for(var i = 0; i < 400; i++) {
+    mid = (lo+hi)/2;
+    if(projCorpus(pv, sip, mid, g, n) < fv) lo = mid; else hi = mid;
+    if((hi-lo) < 1e-10) break;
+  }
+  return mid;
+}
+
+function sipNeeded(pv, fv, r, n) {
+  var rem = fv - pv * Math.pow(1+r, n);
+  if(rem <= 0) return 0;
+  return Math.abs(r) < 1e-6 ? rem/n/12 : (rem * r / (Math.pow(1+r,n)-1)) / 12;
+}
+
+// ── Format helpers ──────────────────────────────────────────────────
+function fmtINR(v) {
+  return '\u20b9' + Math.round(v).toLocaleString('en-IN');
+}
+function fmtK(v) {
+  var a = Math.abs(v);
+  if(a >= 10000000) return '\u20b9' + (v/10000000).toFixed(2) + ' Cr';
+  if(a >= 100000)   return '\u20b9' + (v/100000).toFixed(2) + ' L';
+  if(a >= 1000)     return '\u20b9' + (v/1000).toFixed(1) + 'K';
+  return fmtINR(v);
+}
+
+// ── Main calc ───────────────────────────────────────────────────────
+function calc() {
+  var by  = parseInt(document.getElementById('birthYear').value),
+      cc  = parseFloat(document.getElementById('currentCost').value) || 0,
+      cy  = parseInt(document.getElementById('currYear').value),
+      inf = parseFloat(document.getElementById('inflation').value)/100,
+      ror = parseFloat(document.getElementById('ror').value)/100,
+      ob  = parseFloat(document.getElementById('openBal').value) || 0,
+      sipm = parseFloat(document.getElementById('sipAmount').value) || 0,
+      sipg = document.getElementById('sipGrowth').checked,
+      sgr  = sipg ? parseFloat(document.getElementById('sipGrowthRate').value)/100 : 0;
+
+  // Guard — need at least birth year and cost to calculate
+  if(!by || !cc || !cy) return;
+
+  // College year is always birth year + 18
+  var goalYr = by + 18;
+  document.getElementById('collegeYear').value = goalYr;
+
+  var yrs = goalYr - cy;
+  var age = cy - by;
+  var annSIP = sipm * 12;
+
+  var corpus = cc * Math.pow(1+inf, yrs);
+  var proj   = projCorpus(ob, annSIP, ror, sgr, yrs);
+  var gap    = corpus - proj;
+  var rrr    = calcRRR(ob, corpus, yrs, annSIP, sgr);
+  var addlSIP = sipNeeded(ob, corpus, ror, yrs);
+
+  document.getElementById('kpiCorpus').textContent  = fmtK(corpus);
+  document.getElementById('kpiGoalYr').textContent  = 'Goal year: ' + goalYr + ' (' + yrs + ' yrs away)';
+  document.getElementById('kpiProj').textContent    = fmtK(proj);
+
+  var ge = document.getElementById('kpiGap');
+  ge.textContent = gap > 0 ? 'Shortfall: ' + fmtK(gap) : 'Surplus: ' + fmtK(-gap);
+  ge.style.color = gap > 0 ? '#f87171' : '#34d399';
+
+  document.getElementById('kpiYrs').textContent     = yrs + ' years';
+  document.getElementById('kpiChildAge').textContent = 'Child is ' + age + ' yrs old';
+
+  // RRR display
+  if(rrr !== null) {
+    var rp = (rrr*100).toFixed(2), diff = rrr - ror, vsHtml = '';
+    document.getElementById('rrrVal').textContent = rp + '%';
+    if(rrr <= 0)
+      vsHtml = '<span style="color:#34d399;font-size:.8rem">✅ Portfolio already exceeds corpus. Goal achieved!</span>';
+    else if(diff > 0.001)
+      vsHtml = '<span style="color:#f87171;font-size:.8rem">⚡ RRR (' + rp + '%) is <strong>' + (diff*100).toFixed(2) + '%</strong> above your assumed return (' + (ror*100).toFixed(1) + '%)<br>To bridge at your assumed return, add <strong style="color:#fbbf24">₹' + Math.round(addlSIP).toLocaleString('en-IN') + '/mo</strong> SIP</span>';
+    else if(diff < -0.001)
+      vsHtml = '<span style="color:#34d399;font-size:.8rem">✅ RRR (' + rp + '%) is below assumed return (' + (ror*100).toFixed(1) + '%). Comfortably on track.</span>';
+    else
+      vsHtml = '<span style="color:#fbbf24;font-size:.8rem">RRR matches assumed return exactly. Right on plan.</span>';
+    document.getElementById('rrrVs').innerHTML = vsHtml;
+  } else {
+    document.getElementById('rrrVal').textContent = 'N/A';
+    document.getElementById('rrrVs').innerHTML = '<span style="color:#64748b;font-size:.78rem">Enter an opening corpus and/or SIP amount to compute RRR.</span>';
+  }
+
+  // Feasibility
+  var rn = rrr !== null ? rrr : 999, tag = '', body = '', act = '', showAct = false;
+  if(rn <= 0)        { tag='<span class="tag tg">✅ Goal Already Achieved</span>'; body='Your corpus already exceeds the inflation-adjusted target. Consider de-risking as the goal year nears.'; }
+  else if(rn <= 0.08){ tag='<span class="tag tg">✅ Very Achievable (RRR &lt; 8%)</span>'; body='RRR of <strong>'+(rn*100).toFixed(2)+'%</strong> is achievable with conservative to balanced funds or FDs.'; }
+  else if(rn <= 0.13){ tag='<span class="tag tb">🔵 Achievable (RRR 8–13%)</span>'; body='RRR of <strong>'+(rn*100).toFixed(2)+'%</strong> is achievable with a diversified equity MF portfolio.'; }
+  else if(rn <= 0.18){ tag='<span class="tag ty">⚠️ Stretch Target (RRR 13–18%)</span>'; body='RRR of <strong>'+(rn*100).toFixed(2)+'%</strong> requires aggressive equity allocation. Achievable but high risk.'; act='💡 <strong>Recommended:</strong> Increase SIP by ₹'+Math.round(addlSIP).toLocaleString('en-IN')+'/mo to bring RRR to '+(ror*100).toFixed(1)+'%.'; showAct=true; }
+  else               { tag='<span class="tag tr">🔴 Difficult — Action Needed (RRR &gt; 18%)</span>'; body='RRR of <strong>'+(rn*100).toFixed(2)+'%</strong> is beyond practical equity returns. Immediate action needed.'; act='💡 <strong>Recommended:</strong> Start a monthly SIP of ₹'+Math.round(addlSIP).toLocaleString('en-IN')+'/mo to lower RRR to a feasible level.'; showAct=true; }
+  document.getElementById('feasTag').innerHTML = tag;
+  document.getElementById('feasBody').innerHTML = body;
+  var fa = document.getElementById('feasAction');
+  fa.style.display = showAct ? 'block' : 'none';
+  fa.innerHTML = act;
+
+  // Progress bar (projected only)
+  var p2 = Math.min(100, (proj/corpus)*100);
+  document.getElementById('pb2pct').textContent = p2.toFixed(1) + '%';
+  document.getElementById('pb2fill').style.width = p2 + '%';
+  document.getElementById('pb2sub').textContent = fmtK(proj) + ' projected vs ' + fmtK(corpus) + ' needed';
+
+  // Year-by-year table
+  var tbody = document.getElementById('projBody');
+  tbody.innerHTML = '';
+  var bal = ob, curSIP = annSIP;
+  for(var y = 0; y <= yrs; y++) {
+    var yr = cy + y, isGoal = (y === yrs);
+    var appr  = isGoal ? 0 : bal * ror;
+    var wdrl  = isGoal ? corpus : 0;
+    var close = isGoal ? 0 : bal + curSIP + appr;
+    var rc = y === 0 ? 'row-start' : (isGoal ? (gap <= 0 ? 'row-goal' : 'row-short') : (y%2===0 ? 'row-mid' : ''));
+    tbody.innerHTML += '<tr class="' + rc + '">'
+      + '<td>' + (y===0 ? '—' : y) + '</td>'
+      + '<td><strong>' + yr + '</strong>' + (yr===goalYr ? ' 🎓' : '') + '</td>'
+      + '<td>' + fmtINR(bal) + '</td>'
+      + '<td>' + fmtINR(curSIP) + '</td>'
+      + '<td>' + (isGoal ? '—' : fmtINR(appr)) + '</td>'
+      + '<td>' + (wdrl>0 ? '<strong>' + fmtINR(wdrl) + '</strong>' : '—') + '</td>'
+      + '<td>' + (isGoal ? (gap <= 0 ? '🏅 Met' : '⚠️ Shortfall') : fmtINR(close)) + '</td>'
+      + '<td>' + fmtINR(curSIP/12) + '</td>'
+      + '</tr>';
+    if(!isGoal){ bal = close; if(sipg && y > 0) curSIP *= (1+sgr); }
+  }
+}
+
+function resetAll() {
+  document.getElementById('birthYear').value   = '';
+  document.getElementById('collegeYear').value = '';
+  document.getElementById('currentCost').value = '';
+  document.getElementById('currYear').value    = new Date().getFullYear();
+  document.getElementById('inflation').value   = 7;
+  document.getElementById('ror').value         = 12;
+  document.getElementById('openBal').value     = '';
+  document.getElementById('sipAmount').value   = '';
+  document.getElementById('sipGrowth').checked = false;
+  document.getElementById('sipGrowthLbl').textContent = 'No';
+  document.getElementById('sipGrowthWrap').style.display = 'none';
+  // Re-run validators to reset hint colours
+  validateInflation(document.getElementById('inflation'));
+  validateROR(document.getElementById('ror'));
+  calc();
+}
+
+// Set current year dynamically
+(function() {
+  var el = document.getElementById('currYear');
+  el.value = new Date().getFullYear();
+})();
+
+// Initialise
+validateInflation(document.getElementById('inflation'));
+validateROR(document.getElementById('ror'));
+calc();
+</script>
+<div style="text-align:center;margin-top:40px;font-size:12px;color:#64748b">Built by Nandan Vartak | Financial Planning Tools</div>
+
+</body>
+</html>
