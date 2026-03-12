@@ -173,7 +173,7 @@ tr:hover td{background:rgba(15,33,51,.6)}
         <div class="yi ig">
           <label>Current Education Cost (&#8377;) <span>&#11088;</span></label>
           <input type="number" id="currentCost" value="" step="10000"/>
-          <div class="hint">Total cost in today's value</div>
+          <div class="hint">Total higher education cost in today's value — full fees for a 3 to 4 year course (tuition, hostel, books & misc)</div>
         </div>
         <div class="ig">
           <label>Current Year</label>
@@ -181,7 +181,7 @@ tr:hover td{background:rgba(15,33,51,.6)}
         </div>
         <div class="yi ig">
           <label>Inflation Rate (%) <span>&#11088;</span></label>
-          <input type="number" id="inflation" value="7" step="0.1" min="6" max="15" oninput="validateInflation(this)"/>
+          <input type="number" id="inflation" value="7" step="0.1" oninput="validateInflation(this)" onblur="clampInflation(this)"/>
           <div class="hint" id="inflationHint" style="color:#475569">Education cost inflation p.a. Min: 6% | Max: 15%.</div>
         </div>
         <div class="yi ig">
@@ -307,11 +307,18 @@ tr:hover td{background:rgba(15,33,51,.6)}
 function validateInflation(el) {
   var v = parseFloat(el.value);
   var hint = document.getElementById('inflationHint');
-  if (isNaN(v)) return;
-  if (v > 15) { el.value = 15; v = 15; }
-  if (v < 6)  { el.value = 6;  v = 6;  }
-  hint.style.color = '#475569';
-  hint.textContent = 'Education cost inflation p.a. Min: 6% | Max: 15%.';
+  if (isNaN(v)) { hint.style.color='#475569'; hint.textContent='Education cost inflation p.a. Min: 6% | Max: 15%.'; return; }
+  if (v > 15) { hint.style.color='#f87171'; hint.textContent='⚠️ Above max — will be capped to 15% on exit.'; }
+  else if (v < 6) { hint.style.color='#f87171'; hint.textContent='⚠️ Below min — will be set to 6% on exit.'; }
+  else { hint.style.color='#475569'; hint.textContent='Education cost inflation p.a. Min: 6% | Max: 15%.'; }
+}
+
+function clampInflation(el) {
+  var v = parseFloat(el.value);
+  if (isNaN(v) || v < 6)  { el.value = 6;  }
+  if (v > 15) { el.value = 15; }
+  validateInflation(el);
+  calc();
 }
 
 function validateROR(el) {
