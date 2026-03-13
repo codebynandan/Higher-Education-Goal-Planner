@@ -134,6 +134,7 @@ tr:hover td{background:rgba(15,33,51,.6)}
 @media(max-width:880px){.g2,.g3,.g4{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.g2,.g3,.g4{grid-template-columns:1fr}.hdr{padding:18px 20px}}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -173,7 +174,7 @@ tr:hover td{background:rgba(15,33,51,.6)}
         <div class="yi ig">
           <label>Current Education Cost (&#8377;) <span>&#11088;</span></label>
           <input type="number" id="currentCost" value="" step="10000"/>
-          <div class="hint">Total higher education cost in today's value — full fees for a 3 to 4 year course (tuition, hostel, books & misc)</div>
+          <div class="hint">Enter the estimated total cost in today's value. For reference: Engineering ~₹16L, Design ~₹22L, Law ~₹14L, MBBS Private ~₹1Cr, USA Undergraduate ~₹1Cr. Actual costs may vary by institution and location.</div>
         </div>
         <div class="ig">
           <label>Current Year</label>
@@ -293,6 +294,21 @@ tr:hover td{background:rgba(15,33,51,.6)}
     </div>
   </div>
 
+  <div class="sh">📈 Wealth Trajectory</div>
+  <div class="card" style="padding:18px 20px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+      <div style="font-size:.72rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:1.2px">Year-by-Year Projection</div>
+      <div style="display:flex;gap:16px;font-size:.72rem;color:#94a3b8">
+        <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#3b82f6;margin-right:5px;vertical-align:middle"></span>Projected Corpus</span>
+        <span><span style="display:inline-block;width:10px;height:3px;background:rgba(239,68,68,.7);margin-right:5px;vertical-align:middle;border-top:2px dashed rgba(239,68,68,.7)"></span>Target Corpus</span>
+        <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;margin-right:5px;vertical-align:middle"></span>Annual SIP</span>
+      </div>
+    </div>
+    <div style="position:relative;height:320px">
+      <canvas id="projChart"></canvas>
+    </div>
+  </div>
+
   <div style="margin-top:32px;padding:14px 18px;background:rgba(15,23,42,.6);border:1px solid #1e293b;border-radius:10px;border-left:3px solid #475569">
     <div style="font-size:.72rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">&#9432; Disclaimer</div>
     <div style="font-size:.75rem;color:#475569;line-height:1.65">
@@ -396,6 +412,101 @@ function fmtK(v) {
   return fmtINR(v);
 }
 
+// ── Chart ───────────────────────────────────────────────────────────
+var chartInst = null;
+function renderChart(labels, balance, sipArr, target) {
+  var ctx = document.getElementById('projChart').getContext('2d');
+  if(chartInst) chartInst.destroy();
+  chartInst = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Projected Corpus',
+          data: balance,
+          borderColor: '#3b82f6',
+          backgroundColor: 'rgba(59,130,246,.08)',
+          borderWidth: 2.5,
+          pointRadius: 3,
+          pointHoverRadius: 6,
+          pointBackgroundColor: '#3b82f6',
+          fill: true,
+          tension: 0.35,
+          order: 2
+        },
+        {
+          label: 'Target Corpus',
+          data: target,
+          borderColor: 'rgba(239,68,68,.65)',
+          borderWidth: 2,
+          borderDash: [6,4],
+          pointRadius: 0,
+          pointHoverRadius: 4,
+          fill: false,
+          tension: 0,
+          order: 1
+        },
+        {
+          label: 'Annual SIP',
+          data: sipArr,
+          borderColor: 'rgba(16,185,129,.55)',
+          backgroundColor: 'rgba(16,185,129,.04)',
+          borderWidth: 1.5,
+          pointRadius: 2,
+          pointHoverRadius: 4,
+          fill: true,
+          tension: 0.3,
+          order: 3
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1e293b',
+          borderColor: '#334155',
+          borderWidth: 1,
+          titleColor: '#94a3b8',
+          bodyColor: '#e2e8f0',
+          padding: 10,
+          callbacks: {
+            label: function(c) {
+              var v = c.parsed.y;
+              var s = v >= 10000000 ? '₹'+(v/10000000).toFixed(2)+' Cr'
+                    : v >= 100000   ? '₹'+(v/100000).toFixed(2)+' L'
+                    : '₹'+Math.round(v).toLocaleString('en-IN');
+              return ' ' + c.dataset.label + ': ' + s;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: 'rgba(30,41,59,.8)', drawBorder: false },
+          ticks: { color: '#475569', font: { size: 10 }, maxRotation: 45 }
+        },
+        y: {
+          grid: { color: 'rgba(30,41,59,.8)', drawBorder: false },
+          ticks: {
+            color: '#475569', font: { size: 10 },
+            callback: function(v) {
+              if(v >= 10000000) return '₹'+(v/10000000).toFixed(1)+'Cr';
+              if(v >= 100000)   return '₹'+(v/100000).toFixed(0)+'L';
+              if(v >= 1000)     return '₹'+(v/1000).toFixed(0)+'K';
+              return '₹'+v;
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
 // ── Main calc ───────────────────────────────────────────────────────
 function calc() {
   var by  = parseInt(document.getElementById('birthYear').value),
@@ -473,7 +584,8 @@ function calc() {
   document.getElementById('pb2fill').style.width = p2 + '%';
   document.getElementById('pb2sub').textContent = fmtK(proj) + ' projected vs ' + fmtK(corpus) + ' needed';
 
-  // Year-by-year table
+  // Year-by-year table + chart data
+  var labels = [], balance = [], sipArr = [], target = [];
   var tbody = document.getElementById('projBody');
   tbody.innerHTML = '';
   var bal = ob, curSIP = annSIP;
@@ -483,6 +595,12 @@ function calc() {
     var wdrl  = isGoal ? corpus : 0;
     var close = isGoal ? 0 : bal + curSIP + appr;
     var rc = y === 0 ? 'row-start' : (isGoal ? (gap <= 0 ? 'row-goal' : 'row-short') : (y%2===0 ? 'row-mid' : ''));
+
+    labels.push(yr + (yr === goalYr ? ' 🎓' : ''));
+    balance.push(Math.round(isGoal ? proj : close));
+    sipArr.push(Math.round(curSIP));
+    target.push(Math.round(corpus));
+
     tbody.innerHTML += '<tr class="' + rc + '">'
       + '<td>' + (y===0 ? '—' : y) + '</td>'
       + '<td><strong>' + yr + '</strong>' + (yr===goalYr ? ' 🎓' : '') + '</td>'
@@ -495,6 +613,7 @@ function calc() {
       + '</tr>';
     if(!isGoal){ bal = close; if(sipg && y > 0) curSIP *= (1+sgr); }
   }
+  renderChart(labels, balance, sipArr, target);
 }
 
 function resetAll() {
@@ -512,6 +631,7 @@ function resetAll() {
   // Re-run validators to reset hint colours
   validateInflation(document.getElementById('inflation'));
   validateROR(document.getElementById('ror'));
+  if(chartInst){ chartInst.destroy(); chartInst = null; }
   calc();
 }
 
