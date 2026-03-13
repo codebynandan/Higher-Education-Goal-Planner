@@ -6,14 +6,14 @@
 <title>Higher Education Goal Planner</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',system-ui,Arial,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh}
+body{font-family:'Segoe UI',system-ui,Arial,sans-serif;background:#f8f9fa;color:#1a1a1a;min-height:100vh}
 
 /* HEADER */
-.hdr{background:linear-gradient(135deg,#1e3a5f 0%,#0f2942 100%);padding:22px 36px;border-bottom:1px solid rgba(30,64,175,.35);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
-.hdr-left h1{font-size:1.55rem;font-weight:800;color:#60a5fa;letter-spacing:-.5px}
+.hdr{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);padding:22px 36px;border-bottom:3px solid #f5c518;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.hdr-left h1{font-size:1.55rem;font-weight:800;color:#f5c518;letter-spacing:-.5px}
 .hdr-left p{font-size:.83rem;color:#94a3b8;margin-top:3px}
 .hdr-right{display:flex;gap:8px;align-items:center}
-.badge{background:#1d4ed8;color:#bfdbfe;font-size:.7rem;padding:4px 12px;border-radius:20px;font-weight:700;letter-spacing:.5px}
+.badge{background:#f5c518;color:#1a1a1a;font-size:.7rem;padding:4px 12px;border-radius:20px;font-weight:700;letter-spacing:.5px}
 .badge2{background:#065f46;color:#6ee7b7;font-size:.7rem;padding:4px 12px;border-radius:20px;font-weight:700;letter-spacing:.5px}
 
 /* LAYOUT */
@@ -23,113 +23,113 @@ body{font-family:'Segoe UI',system-ui,Arial,sans-serif;background:#0f172a;color:
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 
 /* SECTION HEADING */
-.sh{font-size:.92rem;font-weight:700;color:#93c5fd;margin:26px 0 12px;display:flex;align-items:center;gap:10px}
-.sh::after{content:'';flex:1;height:1px;background:rgba(30,64,175,.3)}
-.sh .sub{font-size:.72rem;font-weight:400;color:#475569;margin-left:4px}
+.sh{font-size:.92rem;font-weight:800;color:#d4a017;margin:26px 0 12px;display:flex;align-items:center;gap:10px}
+.sh::after{content:'';flex:1;height:1px;background:#e0c84a}
+.sh .sub{font-size:.72rem;font-weight:400;color:#6b7280;margin-left:4px}
 
 /* CARDS */
-.card{background:#1e293b;border-radius:14px;border:1px solid #334155;padding:20px 22px}
-.ct{font-size:.72rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:14px}
+.card{background:#ffffff;border-radius:14px;border:1px solid #e5e7eb;padding:20px 22px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.ct{font-size:.72rem;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:14px}
 
 /* KPI TILES */
-.kpi{background:#1e293b;border-radius:12px;border:1px solid #334155;padding:16px 18px;position:relative;overflow:hidden}
+.kpi{background:#ffffff;border-radius:12px;border:1px solid #e5e7eb;padding:16px 18px;position:relative;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .kpi::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;border-radius:2px 0 0 2px}
-.kpi.b::before{background:#3b82f6}
-.kpi.g::before{background:#10b981}
-.kpi.y::before{background:#f59e0b}
-.kpi.p::before{background:#8b5cf6}
-.kpi.r::before{background:#ef4444}
-.kl{font-size:.7rem;color:#64748b;text-transform:uppercase;letter-spacing:.9px;font-weight:700}
+.kpi.b::before{background:#2563eb}
+.kpi.g::before{background:#059669}
+.kpi.y::before{background:#d97706}
+.kpi.p::before{background:#7c3aed}
+.kpi.r::before{background:#dc2626}
+.kl{font-size:.7rem;color:#6b7280;text-transform:uppercase;letter-spacing:.9px;font-weight:700}
 .kv{font-size:1.45rem;font-weight:800;margin-top:5px;line-height:1.1}
-.ks{font-size:.72rem;color:#94a3b8;margin-top:5px}
-.col-b{color:#60a5fa}.col-g{color:#34d399}.col-y{color:#fbbf24}.col-p{color:#c084fc}.col-r{color:#f87171}
+.ks{font-size:.72rem;color:#6b7280;margin-top:5px}
+.col-b{color:#1d4ed8}.col-g{color:#059669}.col-y{color:#d97706}.col-p{color:#7c3aed}.col-r{color:#dc2626}
 
 /* INPUTS */
 .ig{margin-bottom:12px}
-.ig label{display:block;font-size:.78rem;color:#94a3b8;margin-bottom:4px;font-weight:600}
-.ig input,.ig select{width:100%;padding:9px 11px;background:#0f172a;border:1px solid #334155;border-radius:8px;color:#e2e8f0;font-size:.9rem;outline:none;transition:border .18s}
-.ig input:focus,.ig select:focus{border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.1)}
-.ig .hint{font-size:.69rem;color:#475569;margin-top:3px}
-.yi input{border-color:#b45309!important;background:#140f00!important}
-.yi label{color:#fbbf24!important}
+.ig label{display:block;font-size:.78rem;color:#374151;margin-bottom:4px;font-weight:600}
+.ig input,.ig select{width:100%;padding:9px 11px;background:#f9fafb;border:1px solid #d1d5db;border-radius:8px;color:#1a1a1a;font-size:.9rem;outline:none;transition:border .18s}
+.ig input:focus,.ig select:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.ig .hint{font-size:.69rem;color:#6b7280;margin-top:3px}
+.yi input{border-color:#d97706!important;background:#fffbf0!important}
+.yi label{color:#92400e!important}
 .yi label span{font-size:.62rem;vertical-align:middle;margin-left:3px;opacity:.7}
 
 /* TOGGLE */
 .tw{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.tl{font-size:.78rem;color:#94a3b8;font-weight:600}
+.tl{font-size:.78rem;color:#374151;font-weight:600}
 .tog{position:relative;width:40px;height:21px;cursor:pointer;flex-shrink:0}
 .tog input{opacity:0;width:0;height:0}
-.sli{position:absolute;inset:0;background:#334155;border-radius:21px;transition:.25s}
-.sli::before{content:'';position:absolute;width:15px;height:15px;left:3px;bottom:3px;background:#64748b;border-radius:50%;transition:.25s}
+.sli{position:absolute;inset:0;background:#d1d5db;border-radius:21px;transition:.25s}
+.sli::before{content:'';position:absolute;width:15px;height:15px;left:3px;bottom:3px;background:#9ca3af;border-radius:50%;transition:.25s}
 input:checked+.sli{background:#2563eb}
 input:checked+.sli::before{transform:translateX(19px);background:#fff}
 
 /* PROGRESS */
 .pb-wrap{margin:8px 0}
-.pb-lbl{display:flex;justify-content:space-between;font-size:.72rem;color:#94a3b8;margin-bottom:4px}
+.pb-lbl{display:flex;justify-content:space-between;font-size:.72rem;color:#6b7280;margin-bottom:4px}
 .pb-lbl .pv{font-weight:700}
-.pb-track{height:9px;background:#0f172a;border-radius:9px;overflow:hidden;border:1px solid rgba(30,64,175,.25)}
+.pb-track{height:9px;background:#f3f4f6;border-radius:9px;overflow:hidden;border:1px solid #e5e7eb}
 .pb-fill{height:100%;border-radius:9px;transition:width .7s cubic-bezier(.4,0,.2,1)}
 .pb-fill.blue{background:linear-gradient(90deg,#1d4ed8,#60a5fa)}
 .pb-fill.green{background:linear-gradient(90deg,#059669,#34d399)}
 
 /* TRACKER INVESTMENT ENTRIES */
-.inv-entry{background:#0f172a;border-radius:10px;border:1px solid #1e293b;padding:12px 14px;margin-bottom:8px;transition:border .2s}
-.inv-entry:hover{border-color:#334155}
+.inv-entry{background:#f9fafb;border-radius:10px;border:1px solid #e5e7eb;padding:12px 14px;margin-bottom:8px;transition:border .2s}
+.inv-entry:hover{border-color:#d1d5db}
 .inv-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
 .inv-row .ig{flex:1;min-width:130px;margin-bottom:0}
-.btn-del{background:#450a0a;border:1px solid #7f1d1d;color:#fca5a5;border-radius:7px;padding:8px 11px;cursor:pointer;font-size:.78rem;font-weight:600;transition:all .18s;white-space:nowrap}
-.btn-del:hover{background:#7f1d1d;border-color:#991b1b}
+.btn-del{background:#fef2f2;border:1px solid #fca5a5;color:#dc2626;border-radius:7px;padding:8px 11px;cursor:pointer;font-size:.78rem;font-weight:600;transition:all .18s;white-space:nowrap}
+.btn-del:hover{background:#fee2e2;border-color:#ef4444}
 
 /* TOTAL MV bar */
-.mv-total{background:#0c1a0c;border:1px solid #14532d44;border-radius:10px;padding:12px 16px;margin-top:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-.mv-total .lbl{font-size:.75rem;color:#6ee7b7;font-weight:600;text-transform:uppercase;letter-spacing:.8px}
-.mv-total .val{font-size:1.15rem;font-weight:800;color:#34d399}
+.mv-total{background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:12px 16px;margin-top:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.mv-total .lbl{font-size:.75rem;color:#166534;font-weight:600;text-transform:uppercase;letter-spacing:.8px}
+.mv-total .val{font-size:1.15rem;font-weight:800;color:#15803d}
 
 /* BUTTONS */
 .btn{padding:10px 22px;border-radius:9px;font-weight:700;font-size:.86rem;border:none;cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;gap:6px}
 .bp{background:#1d4ed8;color:#fff}
-.bp:hover{background:#2563eb;transform:translateY(-1px);box-shadow:0 4px 14px rgba(29,78,216,.35)}
-.bs{background:#0f172a;color:#60a5fa;border:1px solid #1e40af}
-.bs:hover{background:#1e293b}
+.bp:hover{background:#1e40af;transform:translateY(-1px);box-shadow:0 4px 14px rgba(29,78,216,.25)}
+.bs{background:#fff;color:#1d4ed8;border:1px solid #bfdbfe}
+.bs:hover{background:#eff6ff}
 .btn-row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
 
 /* RRR BANNER */
-.rrr-card{background:linear-gradient(135deg,#160d2e 0%,#0a1628 100%);border:1px solid rgba(139,92,246,.3);border-radius:14px;padding:22px 26px}
-.rrr-label{font-size:.72rem;color:#a78bfa;text-transform:uppercase;letter-spacing:1.2px;font-weight:700}
-.rrr-value{font-size:2.4rem;font-weight:900;color:#c084fc;line-height:1;margin:6px 0 4px}
-.rrr-sub{font-size:.78rem;color:#7c3aed;margin-top:4px}
-.rrr-vs{margin-top:14px;padding-top:14px;border-top:1px solid rgba(139,92,246,.2)}
+.rrr-card{background:linear-gradient(135deg,#faf5ff 0%,#f5f3ff 100%);border:1px solid #ddd6fe;border-radius:14px;padding:22px 26px}
+.rrr-label{font-size:.72rem;color:#7c3aed;text-transform:uppercase;letter-spacing:1.2px;font-weight:700}
+.rrr-value{font-size:2.4rem;font-weight:900;color:#6d28d9;line-height:1;margin:6px 0 4px}
+.rrr-sub{font-size:.78rem;color:#8b5cf6;margin-top:4px}
+.rrr-vs{margin-top:14px;padding-top:14px;border-top:1px solid #ede9fe}
 
 /* FEASIBILITY */
-.feas-card{background:#1e293b;border-radius:14px;border:1px solid #334155;padding:20px 22px}
+.feas-card{background:#ffffff;border-radius:14px;border:1px solid #e5e7eb;padding:20px 22px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .tag{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:.75rem;font-weight:700}
-.tg{background:#064e3b;color:#6ee7b7;border:1px solid #065f3b}
-.tb{background:#1e3a5f;color:#93c5fd;border:1px solid #1e40af}
-.ty{background:#78350f;color:#fde68a;border:1px solid #92400e}
-.tr{background:#450a0a;color:#fca5a5;border:1px solid #7f1d1d}
-.feas-body{font-size:.82rem;color:#94a3b8;margin-top:10px;line-height:1.6}
-.feas-action{background:#0f172a;border-radius:8px;padding:10px 14px;margin-top:12px;font-size:.78rem;border-left:3px solid #3b82f6;color:#93c5fd;line-height:1.6}
+.tg{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+.tb{background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe}
+.ty{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
+.tr{background:#fef2f2;color:#991b1b;border:1px solid #fca5a5}
+.feas-body{font-size:.82rem;color:#374151;margin-top:10px;line-height:1.6}
+.feas-action{background:#eff6ff;border-radius:8px;padding:10px 14px;margin-top:12px;font-size:.78rem;border-left:3px solid #2563eb;color:#1e40af;line-height:1.6}
 
 /* TABLE */
 .tw2{overflow-x:auto;margin-top:4px}
 table{width:100%;border-collapse:collapse;font-size:.8rem}
-th{background:#0c1524;color:#60a5fa;padding:9px 12px;text-align:right;font-weight:700;white-space:nowrap;border-bottom:2px solid rgba(30,64,175,.5);position:sticky;top:0}
+th{background:#1a1a2e;color:#f5c518;padding:9px 12px;text-align:right;font-weight:700;white-space:nowrap;border-bottom:2px solid #f5c518;position:sticky;top:0}
 th:first-child,th:nth-child(2){text-align:left}
-td{padding:7px 12px;text-align:right;border-bottom:1px solid #1e293b;color:#cbd5e1;white-space:nowrap}
+td{padding:7px 12px;text-align:right;border-bottom:1px solid #f3f4f6;color:#374151;white-space:nowrap}
 td:first-child,td:nth-child(2){text-align:left}
-td:first-child{color:#475569;font-size:.75rem}
-tr:hover td{background:rgba(15,33,51,.6)}
-.row-start td{background:rgba(14,30,14,.6)!important;color:#34d399!important;font-weight:700}
-.row-goal td{background:rgba(20,14,40,.8)!important;color:#c084fc!important;font-weight:700}
-.row-short td{background:rgba(40,14,14,.8)!important;color:#f87171!important;font-weight:700}
-.row-mid td{background:rgba(15,25,45,.4)}
+td:first-child{color:#9ca3af;font-size:.75rem}
+tr:hover td{background:#f9fafb}
+.row-start td{background:#f0fdf4!important;color:#166534!important;font-weight:700}
+.row-goal td{background:#faf5ff!important;color:#6d28d9!important;font-weight:700}
+.row-short td{background:#fef2f2!important;color:#dc2626!important;font-weight:700}
+.row-mid td{background:#fafafa}
 
 /* DIVIDER */
-.divider{height:1px;background:#1e293b;margin:16px 0}
+.divider{height:1px;background:#e5e7eb;margin:16px 0}
 
 /* INFO NOTE */
-.note{background:rgba(30,58,95,.15);border:1px solid rgba(30,64,175,.3);border-radius:8px;padding:10px 14px;font-size:.76rem;color:#94a3b8;margin-top:10px;line-height:1.5}
+.note{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px 14px;font-size:.76rem;color:#78350f;margin-top:10px;line-height:1.5}
 
 @media(max-width:880px){.g2,.g3,.g4{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.g2,.g3,.g4{grid-template-columns:1fr}.hdr{padding:18px 20px}}
@@ -157,8 +157,8 @@ tr:hover td{background:rgba(15,33,51,.6)}
       <div class="ct">Core Assumptions</div>
       <div class="g2" style="gap:10px">
         <div class="ig" style="grid-column:1/-1">
-          <label style="color:#94a3b8">Child's Name</label>
-          <input type="text" id="childName" value="" placeholder="e.g. Aarav" style="background:#0f172a;border:1px solid #334155;border-radius:8px;color:#e2e8f0;padding:9px 11px;width:100%;font-size:.9rem;outline:none"/>
+          <label style="color:#374151">Child's Name</label>
+          <input type="text" id="childName" value="" placeholder="e.g. Aarav" style="background:#f9fafb;border:1px solid #d1d5db;border-radius:8px;color:#1a1a1a;padding:9px 11px;width:100%;font-size:.9rem;outline:none"/>
           <div class="hint">Optional — used for labelling the plan</div>
         </div>
         <div class="yi ig">
@@ -167,8 +167,8 @@ tr:hover td{background:rgba(15,33,51,.6)}
           <div class="hint">Child's year of birth</div>
         </div>
         <div class="ig">
-          <label style="color:#94a3b8">College Start Year <span style="font-size:.68rem;color:#475569;font-weight:400">(auto: birth year + 18)</span></label>
-          <input type="text" id="collegeYear" value="2034" readonly style="background:#0c1828!important;border-color:#1e40af!important;color:#60a5fa!important;font-weight:700;cursor:default"/>
+          <label style="color:#374151">College Start Year <span style="font-size:.68rem;color:#6b7280;font-weight:400">(auto: birth year + 18)</span></label>
+          <input type="text" id="collegeYear" value="2034" readonly style="background:#eff6ff!important;border-color:#bfdbfe!important;color:#1d4ed8!important;font-weight:700;cursor:default"/>
           <div class="hint">Higher education starts at age 18 &#8212; computed automatically</div>
         </div>
         <div class="yi ig">
@@ -183,7 +183,7 @@ tr:hover td{background:rgba(15,33,51,.6)}
         <div class="yi ig">
           <label>Inflation Rate (%) <span>&#11088;</span></label>
           <input type="number" id="inflation" value="7" step="0.1" oninput="validateInflation(this)" onblur="clampInflation(this)"/>
-          <div class="hint" id="inflationHint" style="color:#475569">Education cost inflation p.a. Min: 6% | Max: 15%.</div>
+          <div class="hint" id="inflationHint" style="color:#6b7280">Education cost inflation p.a. Min: 6% | Max: 15%.</div>
         </div>
         <div class="yi ig">
           <label>Expected Return (%) <span>&#11088;</span></label>
@@ -208,7 +208,7 @@ tr:hover td{background:rgba(15,33,51,.6)}
       <div class="tw">
         <span class="tl">Annual SIP step-up?</span>
         <label class="tog"><input type="checkbox" id="sipGrowth"/><span class="sli"></span></label>
-        <span id="sipGrowthLbl" style="font-size:.78rem;color:#64748b">No</span>
+        <span id="sipGrowthLbl" style="font-size:.78rem;color:#6b7280">No</span>
       </div>
       <div class="ig" id="sipGrowthWrap" style="display:none">
         <label>Annual Step-up Rate (%)</label>
@@ -297,8 +297,8 @@ tr:hover td{background:rgba(15,33,51,.6)}
   <div class="sh">📈 Wealth Trajectory</div>
   <div class="card" style="padding:18px 20px">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
-      <div style="font-size:.72rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:1.2px">Year-by-Year Projection</div>
-      <div style="display:flex;gap:16px;font-size:.72rem;color:#94a3b8">
+      <div style="font-size:.72rem;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:1.2px">Year-by-Year Projection</div>
+      <div style="display:flex;gap:16px;font-size:.72rem;color:#374151">
         <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#3b82f6;margin-right:5px;vertical-align:middle"></span>Projected Corpus</span>
         <span><span style="display:inline-block;width:10px;height:3px;background:rgba(239,68,68,.7);margin-right:5px;vertical-align:middle;border-top:2px dashed rgba(239,68,68,.7)"></span>Target Corpus</span>
         <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;margin-right:5px;vertical-align:middle"></span>Annual SIP</span>
@@ -309,10 +309,10 @@ tr:hover td{background:rgba(15,33,51,.6)}
     </div>
   </div>
 
-  <div style="margin-top:32px;padding:14px 18px;background:rgba(15,23,42,.6);border:1px solid #1e293b;border-radius:10px;border-left:3px solid #475569">
-    <div style="font-size:.72rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">&#9432; Disclaimer</div>
-    <div style="font-size:.75rem;color:#475569;line-height:1.65">
-      This tool is intended <strong style="color:#64748b">for illustration and study purposes only</strong>. All projections are based on user-provided assumptions and mathematical models. They do not constitute financial advice, investment recommendations, or any guarantee of future returns or outcomes. Actual results may vary significantly depending on market conditions, inflation, fund performance, and other factors beyond the scope of this model. Please consult a qualified financial advisor before making any investment decisions.
+  <div style="margin-top:32px;padding:14px 18px;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;border-left:3px solid #d97706">
+    <div style="font-size:.72rem;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">ℹ Disclaimer</div>
+    <div style="font-size:.75rem;color:#78350f;line-height:1.65">
+      This tool is intended <strong style="color:#92400e">for illustration and study purposes only</strong>. All projections are based on user-provided assumptions and mathematical models. They do not constitute financial advice, investment recommendations, or any guarantee of future returns or outcomes. Actual results may vary significantly depending on market conditions, inflation, fund performance, and other factors beyond the scope of this model. Please consult a qualified financial advisor before making any investment decisions.
     </div>
   </div>
 
@@ -562,7 +562,7 @@ function calc() {
     document.getElementById('rrrVs').innerHTML = vsHtml;
   } else {
     document.getElementById('rrrVal').textContent = 'N/A';
-    document.getElementById('rrrVs').innerHTML = '<span style="color:#64748b;font-size:.78rem">Enter an opening corpus and/or SIP amount to compute RRR.</span>';
+    document.getElementById('rrrVs').innerHTML = '<span style="color:#6b7280;font-size:.78rem">Enter an opening corpus and/or SIP amount to compute RRR.</span>';
   }
 
   // Feasibility
@@ -646,7 +646,7 @@ validateInflation(document.getElementById('inflation'));
 validateROR(document.getElementById('ror'));
 calc();
 </script>
-<div style="text-align:center;margin-top:40px;font-size:12px;color:#64748b">Built by Nandan Vartak | Financial Planning Tools</div>
+<div style="text-align:center;margin-top:40px;font-size:12px;color:#9ca3af">Built by Nandan Vartak | Financial Planning Tools</div>
 
 </body>
 </html>
